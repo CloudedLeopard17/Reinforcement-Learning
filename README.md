@@ -18,8 +18,7 @@ to deep reinforcement learning agents running in Unity and Atari environments.
 - `tabular/` contains small, interpretable TD-control experiments.
 - `unity/` contains notebooks for connecting to Unity ML-Agents environments and
   training DQN agents from scratch with PyTorch.
-- `atari/` contains the Pong training and inference notebooks, a trained checkpoint,
-  TensorBoard logs, and sample rollouts.
+- `atari/` contains the Pong training and inference notebooks and sample rollouts.
 
 ## Getting Started
 

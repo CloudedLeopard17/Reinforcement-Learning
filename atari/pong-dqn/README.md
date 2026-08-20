@@ -50,15 +50,13 @@ jupyter notebook
 ## Running it
 
 1. Open [pong_dqn_frame_skips.ipynb](pong_dqn_frame_skips.ipynb) and run all
-   cells to train from scratch. This writes a checkpoint (update the save
-   path/filename if you don't want to overwrite the existing one) and
-   TensorBoard logs to `logs_pong_dqn_frame_skips/`.
+   cells to train from scratch. This writes a checkpoint  and
+   TensorBoard logs.
 
    ```bash
    tensorboard --logdir logs_pong_dqn_frame_skips
    ```
 
 2. Open [pong_dqn_inference.ipynb](pong_dqn_inference.ipynb) and run all cells
-   to evaluate `checkpoint_local_pong_frame_skips.pth` (or point it at a new
-   checkpoint) across the three conditions above, and to regenerate
+   to evaluate on the checkpoint from part 1 across the three conditions above, and to regenerate
    `pong_trained.gif` / `pong_trained.mp4`.
