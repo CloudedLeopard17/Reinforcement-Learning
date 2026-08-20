@@ -50,7 +50,7 @@ jupyter notebook
 ## Running it
 
 1. Open [pong_dqn_frame_skips.ipynb](pong_dqn_frame_skips.ipynb) and run all
-   cells to train from scratch. This writes a checkpoint  and
+   cells to train from scratch. This writes a checkpoint and
    TensorBoard logs.
 
    ```bash
@@ -58,5 +58,5 @@ jupyter notebook
    ```
 
 2. Open [pong_dqn_inference.ipynb](pong_dqn_inference.ipynb) and run all cells
-   to evaluate on the checkpoint from part 1 across the three conditions above, and to regenerate
-   `pong_trained.gif` / `pong_trained.mp4`.
+   to evaluate on the checkpoint from part 1 across the three conditions above,
+   and to regenerate `pong_trained.gif` / `pong_trained.mp4`.
