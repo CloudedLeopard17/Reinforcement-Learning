@@ -12,18 +12,9 @@ target network, and training loop are all written here.
 
 | Environment | Observation | Solved at | Greedy evaluation | Random baseline |
 |---|---|---|---|---|
-| Basic | 20-dim vector | ~13.6k steps | 0.93 (optimal) | ~-0.26 |
 | GridWorld | 3x64x84 RGB + goal signal | 15k steps | **0.97** | -0.31 |
 
-**Basic** is the smallest end-to-end check — a one-hot position observation and three
-actions, solvable by tabular Q-learning. Its value is not the result but the
-plumbing: transitions assembled correctly across the ML-Agents decision gap, rewards
-attributed to the right state-action pair, timeouts distinguished from true
-terminals. Any of those being wrong produces a plausible-looking but slowly-degrading
-curve that is miserable to diagnose later.
-
-**GridWorld** is the real problem, and the rest of this README is about how it failed
-before it worked.
+The rest of this README focuses on how GridWorld failed before it worked.
 
 ---
 
@@ -261,7 +252,6 @@ the rule of three: 20 clean episodes are consistent with a failure rate up to ~1
 
 ```
 .
-├── basic.ipynb                       # Basic — smallest end-to-end check
 ├── gridworld_exp.ipynb               # GridWorld — goal-conditioned DQN
 └── maximization_bias_demo.py         # toy experiment behind the gamma finding
 ```
@@ -278,11 +268,7 @@ Run the cell, then press Play in the Editor. The Editor connection is the better
 development loop anyway — you can watch the agent and change reward logic without
 rebuilding. Builds only buy headless throughput and parallel environments.
 
-```bash
-conda create -n mlagents python=3.10.12 && conda activate mlagents
-pip install torch --index-url https://download.pytorch.org/whl/cu121
-pip install mlagents        # matched to the Unity com.unity.ml-agents package version
-```
+Install the dependencies using the shared [Unity installation instructions](../README.md).
 
 Set `time_scale` via `EngineConfigurationChannel` to speed up simulation — these
 environments are simulation-bound, not compute-bound, so GPU utilisation is a poor
