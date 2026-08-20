@@ -32,11 +32,11 @@ jupyter notebook
 ```
 
 For the exact Atari dependencies and execution steps, see the
-[Pong DQN README](atari/PONG%20DQN/README.md). For Unity GridWorld setup, including
+[Pong DQN README](atari/pong-dqn/README.md). For Unity GridWorld setup, including
 the Unity Editor connection and ML-Agents version requirements, see the
-[Unity GridWorld README](unity/grid_world/README.md). The tabular project only
+[Unity GridWorld README](unity/gridworld/README.md). The tabular project only
 requires Python, NumPy, and Matplotlib; its details are in the
-[Windy Gridworld README](tabular/Windy%20Gridworld/readme.md).
+[Windy Gridworld README](tabular/windy-gridworld/readme.md).
 
 ## Reference
 

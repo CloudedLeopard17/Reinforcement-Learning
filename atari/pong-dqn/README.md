@@ -14,8 +14,6 @@ classic Mnih et al. Nature DQN architecture).
 |---|---|
 | [pong_dqn_frame_skips.ipynb](pong_dqn_frame_skips.ipynb) | **Training notebook.** Builds the environment, preprocessing, replay memory, Q-network, and training loop; trains the agent and writes TensorBoard logs. |
 | [pong_dqn_inference.ipynb](pong_dqn_inference.ipynb) | **Evaluation notebook.** Loads the trained checkpoint and evaluates it under three conditions (deterministic baseline, sticky actions, random no-op starts), reports summary stats, and records the `pong_trained.gif` / `pong_trained.mp4` rollout. |
-| `checkpoint_local_pong_frame_skips.pth` | Trained Q-network weights, loaded by the inference notebook. |
-| `logs_pong_dqn_frame_skips/` | TensorBoard logs from training. |
 | `pong_random.gif` | Sample rollout of a random policy, for comparison. |
 | `pong_trained.gif` / `pong_trained.mp4` | Sample rollout of the trained agent. |
 
