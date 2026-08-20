@@ -34,5 +34,8 @@ Both notebooks connect to the Unity Editor rather than a build. Open the relevan
 Unity project, run the notebook cell that creates the environment, and press
 **Play** in the Editor.
 
+- [Unity environment introduction](unity_env_intro.ipynb) covers the ML-Agents
+	Python API, behaviors, `BehaviorSpec`, decision and terminal steps, action
+	submission, and the Unity-to-Gym wrapper.
 - [Basic environment notebook](basic/basic.ipynb)
-- [GridWorld notebook](grid_world/gridworld_exp.ipynb)
+- [GridWorld notebook](gridworld/gridworld_exp.ipynb)

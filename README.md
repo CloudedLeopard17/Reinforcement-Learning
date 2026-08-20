@@ -8,10 +8,10 @@ to deep reinforcement learning agents running in Unity and Atari environments.
 
 | Project | Method | What it covers |
 |---|---|---|
-| [Windy Gridworld](tabular/Windy%20Gridworld/) | SARSA | Exercises 6.9 and 6.10: standard actions, king moves, and stochastic wind. |
+| [Windy Gridworld](tabular/windy-gridworld/) | SARSA | Exercises 6.9 and 6.10: standard actions, king moves, and stochastic wind. |
 | [Unity Basic](unity/basic/basic.ipynb) | DQN | A minimal end-to-end DQN experiment against a Unity ML-Agents environment. |
-| [Unity GridWorld](unity/grid_world/) | DQN | Goal-conditioned visual control, replay memory, action masking, target networks, and debugging value-function divergence. |
-| [Atari Pong](atari/PONG%20DQN/) | DQN | A convolutional DQN trained from stacked, preprocessed Pong frames, with separate evaluation experiments. |
+| [Unity GridWorld](unity/gridworld/) | DQN | Goal-conditioned visual control, replay memory, action masking, target networks, and debugging value-function divergence. |
+| [Atari Pong](atari/pong-dqn/) | DQN | A convolutional DQN trained from stacked, preprocessed Pong frames, with separate evaluation experiments. |
 
 ## Repository Layout
 
