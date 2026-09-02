@@ -136,4 +136,7 @@ than every episode (reseeding every episode kills start-state diversity and make
 better than they are), and evaluate with a separate environment instance so evaluation doesn't
 perturb the training env's RNG stream. For a learned value baseline, it must be detached in the
 policy loss (`returns - values.detach()`) — the baseline theorem only holds if it's constant with
-respect to the policy gradient.
+respect to the policy gradient — *and* the value network's parameters must be passed to the
+optimizer alongside the policy's (`Adam(list(policy.parameters()) + list(value_net.parameters()))`).
+Omitting them is silent: the MSE loss still backprops, nothing errors, and the run still trains,
+but V stays frozen at its random initialisation for the whole run.
