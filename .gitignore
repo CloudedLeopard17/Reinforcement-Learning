@@ -3,3 +3,6 @@ logs_*/
 runs/
 .ipynb_checkpoints/
 __pycache__/
+
+# scratch experiment notebook, not part of the write-up
+policy-gradient/cartpole/ppo_single_trajectory.ipynb

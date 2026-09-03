@@ -19,8 +19,12 @@ not a library.
 
 - `tabular/windy-gridworld/` — SARSA on Windy Gridworld (exercises 6.9/6.10). Deps: NumPy,
   Matplotlib only.
-- `policy-gradient/cartpole/` — REINFORCE variants (no baseline / scalar baseline / value
-  baseline) on CartPole-v1, compared across 10 seeds.
+- `policy-gradient/cartpole/` — the policy-gradient ladder on CartPole-v1, compared across 10
+  seeds. `reinforce.ipynb` holds the baseline variants (none / scalar / value);
+  `ppo_rollout.ipynb` adds the clipped objective and fixed-length 2048-step rollouts. Both are
+  covered by the one directory README. Evaluate a stochastic policy greedily — PPO's entropy
+  bonus makes the training curve understate the policy by up to 340 points on a seed whose
+  greedy score is a perfect 500.
 - `unity/` — DQN agents trained through the **low-level `mlagents_envs` Python API**, not
   `mlagents-learn`. `unity/README.md` is the shared reference for the ML-Agents stepping model,
   action masking, and evaluation methodology — read it before touching anything under `unity/`.
