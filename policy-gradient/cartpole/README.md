@@ -223,8 +223,15 @@ For the value baseline, two details are load-bearing:
 ## What comes next
 
 **A2C** is the rung this pair skips: bootstrap the return instead of waiting for the full
-episode. After that, the same PPO rollout logic scales to Atari — vectorised environments,
-GAE, and a learning rate an order of magnitude lower.
+episode.
+
+The scaling step is built: [**PPO on Pong**](../pong/README.md) takes this same rollout logic
+to Atari — 8 vectorised environments, GAE, a learning rate an order of magnitude lower, and
+15M steps per run. It also inverts one finding from here. On CartPole the greedy score was
+*better* than the training curve (seed 5: 156 training, a perfect 500 greedy); on Pong the
+greedy score reads exactly −21.00 ± 0.00 for the first 1.2M steps while the training curve is
+already climbing, because an untrained argmax is a constant action. Same gap, opposite sign,
+and on Pong it nearly got a healthy run diagnosed as broken.
 
 ## Running it
 

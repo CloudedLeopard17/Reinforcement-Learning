@@ -1,6 +1,7 @@
 *.pth
 logs_*/
 runs/
+ppo_pong*/
 .ipynb_checkpoints/
 __pycache__/
 

@@ -33,6 +33,14 @@ not a library.
     documents a real debugging investigation (a value function that diverged 27% above the
     environment's provable ceiling) — read it before changing gamma, the network architecture, or
     the goal-conditioning scheme.
+- `policy-gradient/pong/` — PPO on Atari Pong, the top rung of the same ladder. Uses ALE's
+  **native** vectorised env (`gym.make_vec` with no `vectorization_mode`, ~2x the async
+  Python-wrapper path); `RecordEpisodeStatistics` must sit *inside* `ClipReward` or every
+  reported score is silently wrong; autoreset is `NEXT_STEP`, so the row after a termination
+  is fabricated and is dropped via a `valid` mask. `dones` records `terminated` (a frame-cap
+  truncation must still bootstrap) while the autoreset mask needs `terminated | truncated` —
+  two flags, two jobs, same loop. 15M steps ≈ 2.5 h per run, so multi-seed comparison is out
+  and the statistical weight moves to the evaluation protocol.
 - `atari/pong-dqn/` — CNN DQN (Mnih et al. Nature DQN architecture) on Atari Pong from stacked
   frames.
 
@@ -123,7 +131,10 @@ off-policy) — see `unity/gridworld/README.md` for the full investigation and
 `unity/gridworld/maximization_bias_demo.py` for the tabular ablation isolating discount from
 generalization. General habit worth carrying into new experiments: log a quantity with a known
 bound (e.g. mean Q vs. the environment's max achievable return) rather than relying on the return
-curve alone.
+curve alone. On Pong with clipped rewards that bound is sharp and cheap: gamma=0.99 gives
+`|V| <= 1/(1-gamma) = 100`, but points are >=35 agent steps apart and a game ends at 21, so
+`V <= sum (0.99^35)^i = 2.37`. A critic drifting past 2.4 is provably broken — a `< 100` check
+would never notice.
 
 ### Evaluation sample sizes
 

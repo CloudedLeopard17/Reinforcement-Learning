@@ -8,6 +8,12 @@ classic Mnih et al. Nature DQN architecture).
 |---|---|---|
 | | ![random policy](pong_random.gif) | ![trained agent](pong_trained.gif) |
 
+> Trained on `Pong-v4` without sticky actions, this agent scores a perfect 21.00 on the
+> condition it trained under and 8.85 once sticky actions are switched on — the collapse the
+> evaluation notebook was written to catch. [PPO on the same game](../../policy-gradient/pong/README.md),
+> trained *with* sticky actions, scores 12.31 there and holds a comparable score with them
+> off. Table in that README.
+
 ## Files
 
 | File | Purpose |
