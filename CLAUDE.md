@@ -41,6 +41,12 @@ not a library.
   truncation must still bootstrap) while the autoreset mask needs `terminated | truncated` —
   two flags, two jobs, same loop. 15M steps ≈ 2.5 h per run, so multi-seed comparison is out
   and the statistical weight moves to the evaluation protocol.
+- `policy-gradient/pendulum/` — DDPG on Pendulum-v1, 10 seeds; the first continuous-action
+  project. The actor loss must be `-critic(s, actor(s))` — feeding the critic buffer actions severs
+  the path to the actor, leaves `actor.grad` as `None`, and Adam silently skips the step. Pendulum
+  never terminates (every episode ends by truncation), so storing `done or truncated` as terminal
+  corrupts every episode boundary. Q is bounded to [-1409, 0] at gamma=0.99: any positive Q is
+  provably wrong. Results saved to `ddpg_pendulum.npz`.
 - `atari/pong-dqn/` — CNN DQN (Mnih et al. Nature DQN architecture) on Atari Pong from stacked
   frames.
 
@@ -142,6 +148,17 @@ Binary-outcome-dominated returns have per-episode std `2·sqrt(p(1-p))` — maxi
 mediocre policy is *harder* to measure precisely than a good or bad one. For near-perfect policies
 (zero observed failures), the normal CI is invalid; use the rule of three instead (95% upper bound
 on failure rate ≈ `3/n`). Don't report a headline success rate from fewer than ~100 episodes.
+
+When the start state drives most of the return variance (Pendulum, Pong without sticky actions),
+evaluate from **fixed** start seeds so checkpoints are paired — on Pendulum this shrank a
+window-comparison CI from ±19.2 to ±1.0 with nothing else changed. Keep per-episode returns, not
+just the mean.
+
+Don't detect forgetting by comparing a seed's *peak* rolling mean with its final window: the max
+of many overlapping noisy windows is biased upward even when nothing changes. On Pendulum it
+reported a 52-point "collapse" where a zero-forgetting bootstrap predicts 43.6 from selection
+alone. It was valid for the REINFORCE comparison only because those drops (500 → 82) dwarfed the
+noise. Compare two fixed windows instead.
 
 ### REINFORCE baseline comparisons (policy-gradient/cartpole)
 
