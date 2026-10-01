@@ -16,6 +16,7 @@ are all implemented here.
 | [CartPole policy gradient](policy-gradient/cartpole/) | REINFORCE → PPO | 500.00 on 7/10 seeds | The policy-gradient ladder over 10 seeds: baseline variants of REINFORCE, then a clipped, rollout-based PPO that stops the collapse they all suffer. |
 | [Pong PPO](policy-gradient/pong/) | PPO | +12.31 sticky | The same PPO scaled to Atari: 8 vectorised envs, 15M steps, and a head-to-head between Monte Carlo advantage and GAE. |
 | [Pendulum DDPG](policy-gradient/pendulum/) | DDPG | −113.9 over 10 seeds | The first continuous-action rung: a deterministic actor trained through its critic, and two measurement artefacts that each looked like the DDPG collapse it isn't. |
+| [Hopper DDPG vs TD3](policy-gradient/mujoco/hopper/) | DDPG → TD3 | 1935 → 3454 over 5 seeds | The same code with three changes: twin critics, target smoothing, delayed updates. Doubles the score, cuts seed variance sixfold, and takes the critic's overestimation from 1.35× to 0.99×. |
 | [Unity Basic](unity/basic/) | DQN | 0.93 (optimal) | A minimal end-to-end DQN against a Unity ML-Agents environment — the check that transition handling, reward attribution, and timeout-versus-terminal logic are correct. |
 | [Unity GridWorld](unity/gridworld/) | DQN | 0.97 | Goal-conditioned visual control: replay memory, action masking, target networks, and a value function that diverged. |
 | [Atari Pong](atari/pong-dqn/) | DQN | 21–0 | A convolutional DQN trained from stacked, preprocessed frames, evaluated under three randomisation conditions. |
@@ -36,6 +37,10 @@ without sticky actions and 8.85 with them; PPO, trained under stickiness, scores
 and holds a comparable score without. Which agent is "better" depends entirely on which
 column you report.
 
+[DDPG vs TD3 on Hopper](policy-gradient/mujoco/hopper/README.md) is the third: two algorithms
+differing in exactly three lines of logic, where the interesting number is not the score but the
+critic's calibration — 1.35× its policy's true discounted return before, 0.99× after.
+
 ## Repository Layout
 
 - `tabular/` — small, interpretable TD-control experiments.
@@ -43,7 +48,9 @@ column you report.
   last. [`cartpole/`](policy-gradient/cartpole/README.md) holds the REINFORCE baseline
   variants and PPO across 10 seeds; [`pong/`](policy-gradient/pong/README.md) scales the same
   PPO to Atari and compares advantage estimators at 15M steps;
-  [`pendulum/`](policy-gradient/pendulum/README.md) moves to continuous actions with DDPG.
+  [`pendulum/`](policy-gradient/pendulum/README.md) moves to continuous actions with DDPG, and
+  [`mujoco/hopper/`](policy-gradient/mujoco/hopper/README.md) pits that DDPG against TD3 where it
+  actually breaks.
 - `unity/` — DQN agents trained through the low-level ML-Agents Python API. The
   [shared Unity README](unity/README.md) covers the stepping model, action masking,
   choosing a discount factor, and evaluating with a defensible sample size.
@@ -69,6 +76,7 @@ jupyter notebook
 | CartPole policy gradient | [policy-gradient/cartpole/README.md](policy-gradient/cartpole/README.md) — one `pip install`; runs on CPU. |
 | Pong PPO | [policy-gradient/pong/README.md](policy-gradient/pong/README.md) — same dependencies as Atari Pong; ~2.5 h per run on a GPU. |
 | Pendulum DDPG | [policy-gradient/pendulum/README.md](policy-gradient/pendulum/README.md) — same `pip install` as CartPole; runs on CPU. |
+| Hopper DDPG/TD3 | [policy-gradient/mujoco/hopper/README.md](policy-gradient/mujoco/hopper/README.md) — needs `gymnasium[mujoco]`; CPU, ~10 h per arm with 5 seeds in parallel. |
 
 ## Reference
 

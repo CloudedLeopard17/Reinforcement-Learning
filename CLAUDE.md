@@ -47,6 +47,16 @@ not a library.
   never terminates (every episode ends by truncation), so storing `done or truncated` as terminal
   corrupts every episode boundary. Q is bounded to [-1409, 0] at gamma=0.99: any positive Q is
   provably wrong. Results saved to `ddpg_pendulum.npz`.
+- `policy-gradient/mujoco/hopper/` — DDPG vs TD3 on Hopper-v5, 5 seeds x 1M steps, both arms from
+  one `run(..., use_td3)`. Hopper observations are **float64** (Pendulum's were float32), so
+  `torch.tensor(state)` needs an explicit dtype or the first forward pass dies. `max_action` is 1.0
+  here. Writing the TD3 arm produced four bugs that all ran without erroring: `target` assigned only
+  on the DDPG branch; the second critic missing from the optimizer; both critics built with the same
+  seed, making `min(Q1, Q2)` identically `Q1` so TD3 silently reduced to DDPG; and target smoothing
+  applied to the exploration action instead of the target action. Seeds run as forked CPU processes
+  (CPU measured faster than CUDA for 256x256 nets at batch 256, and fork cannot re-init a CUDA
+  context). ~10 h per arm: `random.sample` on a `deque` is O(n) and costs 14.1 ms per batch at 1M
+  entries vs 0.49 ms pre-allocated.
 - `atari/pong-dqn/` — CNN DQN (Mnih et al. Nature DQN architecture) on Atari Pong from stacked
   frames.
 
@@ -159,6 +169,16 @@ of many overlapping noisy windows is biased upward even when nothing changes. On
 reported a 52-point "collapse" where a zero-forgetting bootstrap predicts 43.6 from selection
 alone. It was valid for the REINFORCE comparison only because those drops (500 → 82) dwarfed the
 noise. Compare two fixed windows instead.
+
+Related trap, from Hopper: a swing expressed as a multiple of the arm's *own* evaluation noise is a
+within-arm test of "is this movement real", not a cross-arm stability metric. TD3 swung 206 points
+against DDPG's 548 yet scored a *higher* multiple (8.9x vs 3.6x), because a better policy scores
+consistently across fixed starts and shrinks the denominator. Across arms, compare absolute swings.
+
+Where no bound on the value function exists (MuJoCo), measure overestimation directly: load the
+saved actor and critic, roll out from the fixed eval starts, and compare the critic's estimate
+against the discounted return actually obtained. On Hopper this gave 1.35x for DDPG and 0.99x for
+TD3 — a critic that is merely optimistic, which a provable ceiling would never catch.
 
 ### REINFORCE baseline comparisons (policy-gradient/cartpole)
 
