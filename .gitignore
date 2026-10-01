@@ -7,3 +7,4 @@ __pycache__/
 
 # scratch experiment notebook, not part of the write-up
 policy-gradient/cartpole/ppo_single_trajectory.ipynb
+policy-gradient/mujoco/hopper/inference.ipynb

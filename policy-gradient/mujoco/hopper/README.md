@@ -10,6 +10,14 @@ taking the elementwise minimum in the target, **target policy smoothing**, and *
 target updates. Same 5 seeds, same OU exploration, same hyperparameters, same fixed evaluation
 starts, 1M environment steps each (~10 h per arm with the seeds running in parallel).
 
+| DDPG, seed 0 | TD3, seed 0 |
+|---|---|
+| ![DDPG hopper](ddpg_hopper.gif) | ![TD3 hopper](td3_hopper.gif) |
+| falls at step 539, return 1871 | survives all 1000 steps, return 3620 |
+
+Same seed, same start state, same code with three lines of logic changed. Full-resolution TD3
+rollout: [`hopper_td3-episode-0.mp4`](hopper_td3-episode-0.mp4) (480x480, 1000 steps).
+
 ## Result
 
 | | DDPG | TD3 |
